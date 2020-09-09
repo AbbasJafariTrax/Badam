@@ -1,0 +1,403 @@
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, right: 8),
+                              child: Text(
+                                "ملک های مشابه",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                            height: 225,
+                            child: FutureBuilder(
+                                future: getSmilerPropertiesHttp(pro['id']),
+                                builder: (BuildContext context, snapshotPro) {
+                                  if (snapshotPro.hasData) {
+                                    
+                                    
+                                    return ListView.builder(
+                                      itemCount: snapshotPro.data.length,
+                                      
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        Map wp = snapshotPro.data[index];
+                                        print(wp);
+
+                                        return GestureDetector(
+                                          onTap: () {
+                                            print(wp['id']);
+                                            Navigator.pushNamed(
+                                                context,
+                                                '/singleProperty/' +
+                                                    wp['id'].toString());
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            child: Card(
+                                              elevation: 5,
+                                              margin: EdgeInsets.all(10),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Stack(
+                                                    children: <Widget>[
+                                                      FadeInImage.assetNetwork(
+                                                        placeholder:
+                                                            "assets/img/placehoder.png",
+                                                        image: "",
+                                                        width: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                        height: 150,
+                                                      ),
+                                                      Positioned(
+                                                        left: 10,
+                                                        bottom: 10,
+                                                        child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.blue,
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          50)),
+                                                            ),
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    10),
+                                                            child: Text(
+                                                      
+                                                      "",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            )),
+                                                      ),
+                                                      Positioned(
+                                                        right: 10,
+                                                        bottom: 10,
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            50)),
+                                                          ),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child: Icon(
+                                                            Icons.favorite,
+                                                            color: Colors.blue,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                top: 8.0,
+                                                                left: 8,
+                                                                right: 8),
+                                                        child: Text(
+                                                          "",
+                                                          // wp["title"]
+                                                          //     ["rendered"],
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 3, right: 8),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.location_on,
+                                                            color: Colors.grey,
+                                                            size: 19,
+                                                          ),
+                                                          Text(
+                                                            "Herat Afghanistan",
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .grey),
+                                                          ),
+                                                        ]),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 10,
+                                                        right: 10,
+                                                        top: 5),
+                                                    height: 1,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5)),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: <Widget>[
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              Icons.border_all,
+                                                              color: Colors
+                                                                  .black87,
+                                                            ),
+                                                            Text(
+                                                              "4 Bet",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black87),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              Icons.border_all,
+                                                              color: Colors
+                                                                  .black87,
+                                                            ),
+                                                            Text(
+                                                              "4 Bet",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black87),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              Icons.border_all,
+                                                              color: Colors
+                                                                  .black87,
+                                                            ),
+                                                            Text(
+                                                              "4 Bet",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black87),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return ListView.builder(
+                                      itemCount: 2,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (_, __) =>
+                                          Shimmer.fromColors(
+                                        baseColor: Colors.grey[300],
+                                        highlightColor: Colors.grey[100],
+                                        enabled: true,
+                                        child: Container(
+                                          margin: EdgeInsets.all(5),
+                                          width: 300,
+                                          height: 200,
+                                          child: Card(
+                                            color: Colors.transparent,
+                                            elevation: 5,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: 300,
+                                                  height: 150,
+                                                  color: Colors.white,
+                                                ),
+                                                Container(
+                                                  width: 300,
+                                                  height: 15,
+                                                  color: Colors.white,
+                                                ),
+                                                const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 2.0),
+                                                ),
+                                                Container(
+                                                  width: 100,
+                                                  height: 15,
+                                                  color: Colors.white,
+                                                ),
+                                                const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 2.0),
+                                                ),
+                                                Container(
+                                                  width: 200,
+                                                  height: 15,
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                })),
+                        Card(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
+                            child: ExpansionTile(
+                              title: Text('Birth of Universe'),
+                              children: <Widget>[
+                                Text('Big Bang'),
+                                Text('Birth of the Sun'),
+                                Text('Earth is Born'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ButtonTheme(
+                              minWidth: double.infinity,
+                              child: MaterialButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SingleChildScrollView(
+                                        child: Container(
+                                          color: Colors.transparent,
+                                          child: Container(
+                                            height: 300,
+                                            decoration: new BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: new BorderRadius
+                                                        .only(
+                                                    topLeft:
+                                                        const Radius.circular(
+                                                            10.0),
+                                                    topRight:
+                                                        const Radius.circular(
+                                                            10.0))),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 50,
+                                                  decoration: new BoxDecoration(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.5),
+                                                      borderRadius: new BorderRadius
+                                                              .only(
+                                                          topLeft: const Radius
+                                                              .circular(10.0),
+                                                          topRight: const Radius
+                                                              .circular(10.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Text('اماکن نزدیک محل'),
+                                                      IconButton(
+                                                          icon:
+                                                              Icon(Icons.close),
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          })
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 250,
+                                                  child: ListView.builder(
+                                                    itemCount: 8,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return ListTile(
+                                                        title: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: <Widget>[
+                                                            Text("Mosques"),
+                                                            Text("10KM"),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text('اماکن نزدیک محل'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      
