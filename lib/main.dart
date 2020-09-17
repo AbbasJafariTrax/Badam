@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:badam_app/page/Homepage.dart';
+import 'package:badam_app/page/Maps/AGoogleMap.dart';
 import 'package:badam_app/page/agency/showAgencyProperties.dart';
 import 'package:badam_app/page/agency/singleAgence.dart';
 import 'package:badam_app/page/auth/PhoneAuthVerify.dart';
@@ -33,7 +36,17 @@ import 'strings.dart';
 
 final String boxName = 'favourite_list';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 Future<void> main() async {
+  HttpOverrides.global = new MyHttpOverrides();
   await Hive.initFlutter();
   await Hive.openBox<String>(boxName);
   runApp(
@@ -66,6 +79,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   User currentUser = User();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -94,6 +108,8 @@ class MyApp extends StatelessWidget {
           routes: <String, WidgetBuilder>{
             // '/': (BuildContext context) => MyHomePage(),
             // '/': (BuildContext context) => SplashScreen(),
+            // '/': (BuildContext context) => Dashboard(),
+            // '/': (BuildContext context) => Test_home(),
             '/': (BuildContext context) => Dashboard(),
             '/welcome': (BuildContext context) => Welcome(),
             '/register': (BuildContext context) => RegisterUser(),
@@ -121,40 +137,38 @@ class MyApp extends StatelessWidget {
                 SinglePost(ModalRoute.of(context).settings.arguments),
             '/myPropertyList': (BuildContext context) =>
                 MyListProperties(ModalRoute.of(context).settings.arguments),
+            '/SearchDialog': (BuildContext context) => FiltersScreen(),
             '/addPropery': (BuildContext context) => AddPropertise(),
             '/agencyPropertiesList': (BuildContext context) =>
                 ShowPropertyAgency(ModalRoute.of(context).settings.arguments),
-            '/SearchDialog': (BuildContext context) => FiltersScreen(),
             '/searchPage': (BuildContext context) => SearchPage(),
             '/profile': (BuildContext context) => ProfilePage(),
+            AGoogleMap.routeName: (BuildContext context) => AGoogleMap(),
             '/favoritePage': (BuildContext context) => FevoritePage(),
-
             //test
           },
         ),
       ),
       providers: [
-      
         ChangeNotifierProvider.value(value: Auth()),
         ChangeNotifierProvider.value(value: PropertyProvider()),
-
       ],
     );
   }
 
-  //  @override
-  // Widget build(BuildContext context) {
-  //   return ChangeNotifierProvider<MyBottomSheetModel>(
-  //     create: (_) => MyBottomSheetModel(),
-  //     child: MaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       title: 'Flutter Demo',
-  //       theme: ThemeData(
-  //         primarySwatch: Colors.blue,
-  //         fontFamily: 'OpenSans',
-  //       ),
-  //       home: HomeScreen(),
-  //     ),
-  //   );
-  // }
+//  @override
+// Widget build(BuildContext context) {
+//   return ChangeNotifierProvider<MyBottomSheetModel>(
+//     create: (_) => MyBottomSheetModel(),
+//     child: MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//         fontFamily: 'OpenSans',
+//       ),
+//       home: HomeScreen(),
+//     ),
+//   );
+// }
 }

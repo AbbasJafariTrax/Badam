@@ -5,7 +5,9 @@ class ImageProperty {
   String mediaType;
   String sourceUrl;
 
-  ImageProperty({@required this.id,@required this.mediaType,@required this.sourceUrl});
-
-  
+  ImageProperty({
+    @required this.id,
+    @required this.mediaType,
+    @required this.sourceUrl,
+  });
 }

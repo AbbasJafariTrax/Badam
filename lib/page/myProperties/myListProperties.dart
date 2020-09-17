@@ -13,13 +13,16 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class MyListProperties extends StatefulWidget {
   final String id;
+
   MyListProperties(this.id);
+
   @override
   _MyListPropertiesState createState() => new _MyListPropertiesState(this.id);
 }
 
 class _MyListPropertiesState extends State<MyListProperties> {
   final String id;
+
   _MyListPropertiesState(this.id);
 
   Widget _buildTitle(BuildContext context) {
@@ -51,29 +54,26 @@ class _MyListPropertiesState extends State<MyListProperties> {
   List<Widget> _buildActions() {
     return <Widget>[
       new IconButton(
-        icon: Row(children: <Widget>[
-          FaIcon(FontAwesomeIcons.plus),
-          
-        ],),
+        icon: Row(
+          children: <Widget>[
+            FaIcon(FontAwesomeIcons.plus),
+          ],
+        ),
         onPressed: () => Navigator.pushNamed(context, "/addPropery"),
       ),
-      
     ];
   }
-  
 
   var refreshkey = GlobalKey<RefreshIndicatorState>();
 
   Future<Null> refreshlist() async {
-
-    refreshkey.currentState?.show(atTop:true);
+    refreshkey.currentState?.show(atTop: true);
     await Future.delayed(Duration(seconds: 2)); //wait here for 2 second
-    setState(() {
-
-    });
-
+    setState(() {});
   }
+
   bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -81,17 +81,18 @@ class _MyListPropertiesState extends State<MyListProperties> {
         title: _buildTitle(context),
         actions: _buildActions(),
       ),
-      body:  RefreshIndicator(
+      body: RefreshIndicator(
         key: refreshkey,
         onRefresh: refreshlist,
         child: FutureBuilder(
           future: getMyDataList(this.id),
           builder: (context, snapshot) {
             var data = snapshot.data;
-            
-            return snapshot.hasData
-                ?  MyListPropertiesWidget(data)
-                : loaderMyProperties();
+
+            return MyListPropertiesWidget(data);
+            // return snapshot.hasData
+            //     ? MyListPropertiesWidget(data)
+            //     : loaderMyProperties();
           },
         ),
       ),
@@ -99,132 +100,140 @@ class _MyListPropertiesState extends State<MyListProperties> {
   }
 
   Widget MyListPropertiesWidget(List data) {
+    return data.length > 0
+        ? new ListView.builder(
+            itemCount: data == null ? 0 : data.length,
+            itemBuilder: (BuildContext context, int index) {
+              Map mylist = data[index];
 
-    
-
-    return data.length > 0 ? new ListView.builder(
-        itemCount: data == null ? 0 : data.length,
-        itemBuilder: (BuildContext context, int index) {
-          Map mylist = data[index];
-
-
-          return GestureDetector(
-            onTap: () => Navigator.pushNamed(context, '/singleProperty',
-                arguments: mylist),
-            child: new Card(
-              child: new Container(
-                  child: new Center(
-                    child: new Row(
-                      children: <Widget>[
-                        new CircleAvatar(
-                          radius: 30.0,
-                          child: Hero(
-                            tag:mylist['id'] ,
-                                                      child: FadeInImage.assetNetwork(
-                              placeholder: "assets/img/placehoder.png",
-                              image: mylist["better_featured_image"] != null
-                                  ? mylist["better_featured_image"]
-                                          ["media_details"]["sizes"]["medium"]
-                                      ["source_url"]
-                                  : "",
-                              width: 150,
-                              alignment: Alignment.bottomLeft,
-                              fit: BoxFit.fitHeight,
-                              height: 150,
-                            ),
-                          ),
-                          backgroundColor: const Color(0xFF20283e),
-                        ),
-                        new Expanded(
-                          child: new Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: new Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                new Text(
-                                  mylist['title']['rendered'],
-                                  // set some style to text
-                                  style: new TextStyle(
-                                    fontSize: 18.0,
-                                  ),
+              return GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/singleProperty',
+                    arguments: mylist),
+                child: new Card(
+                  child: new Container(
+                      child: new Center(
+                        child: new Row(
+                          children: <Widget>[
+                            new CircleAvatar(
+                              radius: 30.0,
+                              child: Hero(
+                                tag: mylist['id'],
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: "assets/img/placehoder.png",
+                                  image: mylist["better_featured_image"] != null
+                                      ? mylist["better_featured_image"]
+                                              ["media_details"]["sizes"]
+                                          ["medium"]["source_url"]
+                                      : "",
+                                  width: 150,
+                                  alignment: Alignment.bottomLeft,
+                                  fit: BoxFit.fitHeight,
+                                  height: 150,
                                 ),
-                                new Text(
-                                  mylist['property_meta']
-                                      ['REAL_HOMES_property_id'][0],
-                                  // set some style to text
-                                  style: new TextStyle(
-                                    fontSize: 15.0,
+                              ),
+                              backgroundColor: const Color(0xFF20283e),
+                            ),
+                            new Expanded(
+                              child: new Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Text(
+                                      mylist['title']['rendered'],
+                                      // set some style to text
+                                      style: new TextStyle(
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                    new Text(
+                                      mylist['property_meta']
+                                          ['REAL_HOMES_property_id'][0],
+                                      // set some style to text
+                                      style: new TextStyle(
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            new Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new IconButton(
+                                  padding: EdgeInsets.all(3),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: const Color(0xFF167F67),
+                                    size: 25,
                                   ),
+                                  onPressed: () {
+                                    Alert(
+                                      context: context,
+                                      type: AlertType.warning,
+                                      title: "حذف کردن !",
+                                      desc: "آیا مطمین استن که ملک را حذف شود.",
+                                      buttons: [
+                                        DialogButton(
+                                          child: Text(
+                                            "بله",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            deleteProperty(mylist['id'])
+                                                .then((data) {
+                                              if (data != null) {
+                                                _isLoading = false;
+                                                refreshlist();
+                                              }
+                                            });
+                                          },
+                                          color:
+                                              Color.fromRGBO(0, 179, 134, 1.0),
+                                        ),
+                                        DialogButton(
+                                          child: Text(
+                                            "نخیر",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          color: Colors.redAccent,
+                                        )
+                                      ],
+                                    ).show();
+                                  },
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new IconButton(
-                              padding: EdgeInsets.all(3),
-                              icon: const Icon(
-                                Icons.delete,
-                                color: const Color(0xFF167F67),
-                                size: 25,
-                              ),
-                              onPressed: () {
-                                Alert(
-                                  context: context,
-                                  type: AlertType.warning,
-                                  title: "حذف کردن !",
-                                  desc: "آیا مطمین استن که ملک را حذف شود.",
-                                  buttons: [
-                                    DialogButton(
-                                      child: Text(
-                                        "بله",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      ),
-                                      onPressed: () {
-                                     
-                                        Navigator.pop(context);
-                                        deleteProperty(mylist['id']).then((data){
-                                          if(data != null){
-                                             
-                                               _isLoading = false;
-                                              refreshlist();
-                                            
-                                          }
-                                        });
-                                      },
-                                      color: Color.fromRGBO(0, 179, 134, 1.0),
-                                    ),
-                                    DialogButton(
-                                      child: Text(
-                                        "نخیر",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      ),
-                                      onPressed: () => Navigator.pop(context),
-                                      color: Colors.redAccent,
-                                    )
-                                  ],
-                                ).show();
-                              },
-                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
-            ),
-          );
-        }) :   Center(child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Image.asset("assets/img/logo-med.png",width: 200,color: Colors.grey.withOpacity(0.2),),
-                Text("هیج ملک از شما ثبت نیست",style: titleMedum(context),),
-              ],
-            ));
+                      ),
+                      padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0)),
+                ),
+              );
+            })
+        : Center(
+            child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Image.asset(
+                "assets/img/logo-med.png",
+                width: 200,
+                color: Colors.grey.withOpacity(0.2),
+              ),
+              Text(
+                "هیج ملک از شما ثبت نیست",
+                style: titleMedum(context),
+              ),
+            ],
+          ));
   }
 
   Future deleteProperty(id) {

@@ -48,11 +48,16 @@ class _Test_Login_pageState extends State<Test_Login_page> {
               ),
             ),
             FlatButton(
-              onPressed: () => showDialog(
-                  context: context,
-                  builder: (_) {
-                    return ShowLoginDialog();
-                  }),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ManagerPage(),
+                ),
+              ),
+              // showDialog(
+              // context: context,
+              // builder: (_) {
+              //   return ShowLoginDialog();
+              // }),
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Card(

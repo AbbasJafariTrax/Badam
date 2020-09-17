@@ -37,7 +37,6 @@ import 'requests/params_tag_list.dart';
 import 'requests/params_page_list.dart';
 import 'requests/params_media_list.dart';
 
-
 /// All WordPress related functionality are defined under this class.
 class WordPress {
   String _baseUrl = "http://www.badam.af/";
